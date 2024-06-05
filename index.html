@@ -6,61 +6,124 @@
 <title>Calculadora de Idades</title>
 <style>
     body {
-    font-family: Arial, sans-serif;
-    background-color: #f3f3f3;
-}
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #fff5f5;
+        margin: 0;
+        padding: 0;
+    }
 
-.calculator {
-    max-width: 400px;
-    margin: 50px auto;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 5px;
-}
+    .container {
+        max-width: 600px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
 
-button {
-    padding: 5px 10px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-    margin-top: 10px;
-}
+    h1 {
+        text-align: center;
+        color: #ff69b4;
+        font-size: 28px;
+        margin-bottom: 20px;
+        position: relative;
+    }
 
-button:hover {
-    background-color: #0056b3;
-}
+    h1::before,
+    h1::after {
+        content: "";
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        background-image: url('https://emojicombos.com/emoji/emoji-v1/1f495.png');
+        background-size: cover;
+    }
+
+    h1::before {
+        top: -20px;
+        left: -20px;
+    }
+
+    h1::after {
+        top: -20px;
+        right: -20px;
+    }
+
+    label {
+        color: #ff69b4;
+        font-size: 16px;
+    }
+
+    input[type="number"],
+    input[type="checkbox"],
+    button {
+        margin-top: 5px;
+        margin-bottom: 10px;
+        padding: 8px 12px;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+    }
+
+    input[type="number"],
+    input[type="checkbox"] {
+        width: 60px;
+        border: 2px solid #ff69b4;
+    }
+
+    button {
+        background-color: #ff69b4;
+        color: #fff;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+        background-color: #ff1493;
+    }
+
+    p {
+        margin-bottom: 10px;
+        font-size: 16px;
+    }
+
+    #resultadoComparativoCasal,
+    #resultadoComparativoTrisal {
+        font-weight: bold;
+    }
 </style>
 </head>
 <body>
-<h1>Calculadora de Idades</h1>
+<div class="container">
+    <h1>Calculadora de Idades</h1>
 
-<label for="idade">Insira a idade:</label>
-<input type="number" id="idade">
-<input type="checkbox" id="idadeMeses">
-<label for="idadeMeses">Idade em meses</label>
+    <label for="idade">Insira a sua idade:</label>
+    <input type="number" id="idade">
+    <input type="checkbox" id="idadeMeses">
+    <label for="idadeMeses">Idade em meses</label>
 
-<br><br>
+    <br><br>
 
-<button onclick="calcularIdadeMinima()">Calcular Idade Mínima para Namorar</button>
-<p id="resultadoIdadeMinima"></p>
-<p id="resultadoIdadeMaxima"></p>
+    <button onclick="calcularIdadeMinima()">Calcular Idade Mínima para Namorar</button>
+    <p id="resultadoIdadeMinima"></p>
+    <p id="resultadoIdadeMaxima"></p>
 
-<label for="idade1">Insira a primeira idade:</label>
-<input type="number" id="idade1">
+    <label for="idade1" style="border: 2px solid #ff69b4; padding: 5px;">Insira a idade da primeira pessoa:</label>
+    <input type="number" id="idade1" style="border: 2px solid #ff69b4; padding: 5px;">
 
-<label for="idade2">Insira a segunda idade:</label>
-<input type="number" id="idade2">
+    <br><label for="idade2" style="border: 2px solid #ff69b4; padding: 5px;">Insira a idade da segunda pessoa:</label>
+    <input type="number" id="idade2" style="border: 2px solid #ff69b4; padding: 5px;">
 
-<button onclick="calcularDiferencaCasal()">Comparar Idades do Casal</button>
-<p id="resultadoComparativoCasal"></p>
-<p id="comparativoIdades"></p>
+    <button onclick="calcularDiferencaCasal()">Comparar Idades do Casal</button>
+    <p id="resultadoComparativoCasal"></p>
+    <p id="comparativoIdades"></p>
 
-<label for="idade3">Insira a terceira idade:</label>
-<input type="number" id="idade3">
+    <label for="idade3">Insira a idade da terceira pessoa:</label>
+    <input type="number" id="idade3">
 
-<button onclick="calcularDiferencaTrisal()">Comparar Idades do Trisal</button>
-<p id="resultadoComparativoTrisal"></p>
+    <button onclick="calcularDiferencaTrisal()">Comparar Idades do Trisal</button>
+    <p id="resultadoComparativoTrisal"></p>
+</div>
 
 <script>
     function calcularIdadeMinima() {
@@ -73,58 +136,62 @@ button:hover {
             return;
         }
 
-        let idademinima = Math.floor(idade / 2) + 7;
+        let idadeMinima = Math.floor(idade / 2) + 7;
         if (idade % 2 === 1) {
-            idademinima++;
+            idadeMinima++;
         }
+
+        let idadeMaxima = (idade - 7) * 2;
 
         if (idadeMeses) {
-            idademinima = Math.ceil(idademinima / 12);
+            idadeMinima *= 12;
+            idadeMaxima *= 12;
         }
 
-        let idadeMaxima = (idade-7)*2
-        document.getElementById('resultadoIdadeMinima').innerText = `Idade mínima para namorar: ${idademinima}`;
-        document.getElementById('resultadoIdadeMaxima').innerText = `Idade máxima para namorar: ${idadeMaxima}`;
-
-
+        document.getElementById('resultadoIdadeMinima').innerText = `Idade mínima para namorar: ${idadeMeses ? idadeMinima + " meses" : idadeMinima}`;
+        document.getElementById('resultadoIdadeMaxima').innerText = `Idade máxima para namorar: ${idadeMeses ? idadeMaxima + " meses" : idadeMaxima}`;
     }
 
     function calcularDiferencaCasal() {
         const idade1 = parseInt(document.getElementById('idade1').value);
         const idade2 = parseInt(document.getElementById('idade2').value);
+        const idadeMinima = parseInt(document.getElementById('resultadoIdadeMinima').innerText.split(": ")[1]);
+        const idadeMaxima = parseInt(document.getElementById('resultadoIdadeMaxima').innerText.split(": ")[1]);
 
         const diferenca = Math.abs(idade1 - idade2);
         let comparativoIdades;
-        if (idade2 >= resultadoIdadeMinima && idade2 <= resultadoIdadeMaxima) {
+        if (idade1 >= idadeMinima && idade1 <= idadeMaxima && idade2 >= idadeMinima && idade2 <= idadeMaxima) {
             comparativoIdades = "Vocês podem namorar!";
-
-        } 
-        else {
+        } else {
             comparativoIdades = "Vocês não podem namorar!";
         }
         document.getElementById('resultadoComparativoCasal').innerText = `Diferença de idades do casal: ${diferenca}`;
-        document.getElementById('comparativoIdades').innerText = `Vocês podem namorar!`;
+        document.getElementById('comparativoIdades').innerText = comparativoIdades;
     }
 
+    function calcularDiferencaTrisal() {
+        const idade1 = parseInt(document.getElementById('idade1').value);
+        const idade2 = parseInt(document.getElementById('idade2').value);
+        const idade3 = parseInt(document.getElementById('idade3').value);
+        const idadeMinima = parseInt(document.getElementById('resultadoIdadeMinima').innerText.split(": ")[1]);
+        const idadeMaxima = parseInt(document.getElementById('resultadoIdadeMaxima').innerText.split(": ")[1]);
 
+        const diferenca1 = Math.abs(idade1 - idade2);
+        const diferenca2 = Math.abs(idade1 - idade3);
+        const diferenca3 = Math.abs(idade3 - idade2);
 
- function calcularDiferencaTrisal() {
-    const idade1 = parseInt(document.getElementById('idade1').value);
-    const idade2 = parseInt(document.getElementById('idade2').value);
-    const idade3 = parseInt(document.getElementById('idade3').value);
+        let comparativoTrisal = "Vocês podem namorar!";
 
-    const diferenca1 = Math.abs(idade1 - idade2);
-    const diferenca2 = Math.abs(idade1 - idade3);
-    const diferenca3 = Math.abs(idade3 - idade2);
+        if (idade1 < idadeMinima || idade1 > idadeMaxima || idade2 < idadeMinima || idade2 > idadeMaxima || idade3 < idadeMinima || idade3 > idadeMaxima) {
+            comparativoTrisal = "Vocês não podem namorar!";
+        }
 
-    document.getElementById('resultadoComparativoTrisal').innerText = `Diferença de idades entre os membros do trisal: `;
-    document.getElementById('resultadoComparativoTrisal').innerText += ` Pessoa 1 e Pessoa 2: ${diferenca1} anos, `;
-    document.getElementById('resultadoComparativoTrisal').innerText += ` Pessoa 1 e Pessoa 3: ${diferenca2} anos, `;
-    document.getElementById('resultadoComparativoTrisal').innerText += ` Pessoa 2 e Pessoa 3: ${diferenca3} anos`;
-}
-
-//DESISTO :(
+        document.getElementById('resultadoComparativoTrisal').innerText = `Diferença de idades entre os membros do trisal: `;
+        document.getElementById('resultadoComparativoTrisal').innerText += ` Pessoa 1 e Pessoa 2: ${diferenca1} anos, `;
+        document.getElementById('resultadoComparativoTrisal').innerText += ` Pessoa 1 e Pessoa 3: ${diferenca2} anos, `;
+        document.getElementById('resultadoComparativoTrisal').innerText += ` Pessoa 2 e Pessoa 3: ${diferenca3} anos. `;
+        document.getElementById('resultadoComparativoTrisal').innerText += `Resultado do Trisal: ${comparativoTrisal}`;
+    }
 </script>
 </body>
 </html>
-
